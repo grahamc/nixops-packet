@@ -158,9 +158,7 @@ class PacketState(MachineState):
                     public_key
                 ]
             },
-            "imports": [
-                nix2py(self.provSystem if self.provSystem is not None else "{}")
-            ],
+            "imports": [nix2py(self.provSystem)],
         }
 
     def get_physical_spec(self):
