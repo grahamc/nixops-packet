@@ -6,7 +6,7 @@
 let
   pkgs = import nixpkgs { };
   version = "1.6.1" + (if officialRelease then "" else "pre${toString nixopsSrc.revCount}_${nixopsSrc.shortRev}");
-  packet = pkgs.python2Packages.packet-python.overrideAttrs (old: {
+  packet = pkgs.python3Packages.packet-python.overrideAttrs (old: {
     src = pkgs.fetchFromGitHub {
       owner = "packethost";
       repo = "packet-python";
@@ -14,7 +14,7 @@ let
       sha256 = "16nsq7bg9588cqiw3d7xqdps0lgv1s6dsjivawf3kjxnkz5ldliy";
     };
     patches = [];
-    buildInputs = old.buildInputs ++ [ pkgs.python2Packages.pytestrunner ];
+    buildInputs = old.buildInputs ++ [ pkgs.python3Packages.pytestrunner ];
   });
 
 in
@@ -23,7 +23,7 @@ rec {
   build = pkgs.lib.genAttrs [ "x86_64-linux" "i686-linux" "x86_64-darwin" ] (system:
     with import nixpkgs { inherit system; };
 
-    python2Packages.buildPythonPackage rec {
+    python3Packages.buildPythonPackage rec {
       name = "nixops-packet-${version}";
       namePrefix = "";
 
@@ -35,7 +35,7 @@ rec {
         done
       '';
 
-      buildInputs = [ python2Packages.nose python2Packages.coverage ];
+      buildInputs = [ python3Packages.nose python3Packages.coverage ];
 
       propagatedBuildInputs = [
           packet
