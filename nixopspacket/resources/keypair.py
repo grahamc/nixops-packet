@@ -68,14 +68,14 @@ class PacketKeyPairState(nixops.resources.ResourceState):
     def create(self, defn, check, allow_reboot, allow_recreate):
 
         # TODO: Fix Me
-        self.access_key_id = defn.access_key_id
+        self.access_key_id = defn.access_key_id or nixops.ec2_utils.get_access_key_id()
         self.project = defn.project
         if not self.access_key_id:
             raise Exception("please set ‘accessKeyId’, $PACKET_ACCESS_KEY")
 
         # Generate the key pair locally.
         if not self.public_key:
-            (private, public) = nixops.util.create_key_pair(type="ed25519")
+            (private, public) = nixops.util.create_key_pair(type="rsa")
             with self.depl._db:
                 self.public_key = public
                 self.private_key = private
@@ -109,7 +109,7 @@ class PacketKeyPairState(nixops.resources.ResourceState):
 
     def destroy(self, wipe=False):
         def keypair_used():
-            for m in self.depl.active_resources.itervalues():
+            for m in self.depl.active_resources.values():
                 if (
                     isinstance(m, nixopspacket.backends.device.PacketState)
                     and m.key_pair == self.keypair_name
