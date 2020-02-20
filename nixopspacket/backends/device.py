@@ -3,7 +3,7 @@
 A backend for packet.net.
 
 """
-from __future__ import absolute_import
+
 import os
 import os.path
 import time
@@ -180,7 +180,7 @@ class PacketState(MachineState):
                 self.state = self.packetstate2state(instance.state)
                 raise e
             else:
-                print e
+                print(e)
                 self.log("An error occurred destroying instance. Assuming it's been destroyed already.")
         self.public_ipv4 = None
         self.private_ipv4 = None
@@ -279,7 +279,7 @@ class PacketState(MachineState):
         return states.get(packetstate)
 
     def findKeypairResource(self, key_pair_name):
-        for r in self.depl.active_resources.itervalues():
+        for r in self.depl.active_resources.values():
             if isinstance(r, nixopspacket.resources.keypair.PacketKeyPairState) and \
                     r.state == nixopspacket.resources.keypair.PacketKeyPairState.UP and \
                     r.keypair_name == key_pair_name:
