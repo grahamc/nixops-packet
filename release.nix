@@ -1,4 +1,5 @@
 { nixopsSrc ? { outPath = ./.; revCount = 0; shortRev = "abcdef"; rev = "HEAD"; }
+, nixops
 , officialRelease ? false
 , nixpkgs ? <nixpkgs>
 }:
@@ -35,7 +36,7 @@ rec {
         done
       '';
 
-      buildInputs = [ python3Packages.nose python3Packages.coverage ];
+      buildInputs = [ python3Packages.nose python3Packages.coverage nixops ];
 
       propagatedBuildInputs = [
           packet
