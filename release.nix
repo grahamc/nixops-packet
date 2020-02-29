@@ -11,8 +11,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "packethost";
       repo = "packet-python";
-      rev = "v1.42.0";
-      sha256 = "16nsq7bg9588cqiw3d7xqdps0lgv1s6dsjivawf3kjxnkz5ldliy";
+      rev = "532fd866ee0cb658ec82a0d34a100cf5e8efa0fd";
+      sha256 = "0g0jz4wi6njzc6iqjnkgimi5x0sp1rmbqwnd45d90c359i0ix1bm";
     };
     patches = [];
     buildInputs = old.buildInputs ++ [ pkgs.python3Packages.pytestrunner ];
@@ -36,11 +36,12 @@ rec {
         done
       '';
 
-      buildInputs = [ python3Packages.nose python3Packages.coverage nixops ];
+
+      nativeBuildInputs = [ python37Packages.mypy python3Packages.nose python3Packages.coverage (builtins.trace "${nixops."${system}"}" nixops."${system}") ];
 
       propagatedBuildInputs = [
-          packet
-        ];
+        packet
+      ];
 
       postInstall =
         ''
