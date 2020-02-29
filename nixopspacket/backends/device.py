@@ -19,6 +19,7 @@ import socket
 import packet
 import json
 import getpass
+from typing import Dict
 
 class PacketDefinition(MachineDefinition):
     @classmethod
@@ -114,7 +115,7 @@ class PacketState(MachineState):
 
     def get_sos_ssh_name(self):
         self.connect()
-        instance = self._conn.get_device(self.vm_id)
+        instance = self.connect().get_device(self.vm_id)
         return "sos.{}.packet.net".format(instance.facility['code'])
 
     def op_sos_console(self):
@@ -150,14 +151,8 @@ class PacketState(MachineState):
             isinstance(r, nixopspacket.resources.keypair.PacketKeyPairState)
         }
 
-    def get_api_key(self):
-        apikey = os.environ.get('PACKET_API_KEY', self.apikey)
-        if apikey == None:
-            raise Exception("PACKET_API_KEY must be set in the environment to deploy instances")
-        return apikey
-
     def get_common_tags(self):
-        tags = {
+        tags: Dict[str, str] = {
                  "uuid": self.depl.uuid,
                  "name": self.name,
                  "ssh_url": "{0}@{1}:{2}".format(getpass.getuser(), socket.gethostname(), self.depl._db.db_file),
@@ -173,7 +168,7 @@ class PacketState(MachineState):
         self.log("destroying instance {}".format(self.vm_id))
         try:
             if self.vm_id != None:
-                instance = self._conn.get_device(self.vm_id)
+                instance = self.connect().get_device(self.vm_id)
                 instance.delete()
         except packet.baseapi.Error as e:
             if e.args[0] == "Error 422: Cannot delete a device while it is provisioning":
@@ -201,7 +196,7 @@ class PacketState(MachineState):
 
         if self.vm_id and check:
             try:
-                instance = self._conn.get_device(self.vm_id)
+                instance = self.connect().get_device(self.vm_id)
             except packet.baseapi.Error as e:
                 if e.args[0] == "Error 404: Not found":
                     instance = None
@@ -333,14 +328,14 @@ class PacketState(MachineState):
         self.connect()
         kp = self.findKeypairResource(defn.key_pair)
         common_tags = self.get_common_tags()
-        tags = { }
+        tags: Dict[str, str] = { }
         tags.update(defn.tags)
         tags.update(common_tags)
         self.log_start("creating packet device ...")
         self.log("project: '{0}'".format(defn.project))
         self.log("facility: {0}".format(defn.facility))
         self.log("keyid: {0}".format(kp.keypair_id))
-        instance = self._conn.create_device(
+        instance = self.connect().create_device(
             project_id=defn.project,
             hostname = "{0}".format(self.name),
             plan=defn.plan,
@@ -387,7 +382,7 @@ class PacketState(MachineState):
     def wait_for_state(self, target_state):
         self.log_start("waiting for the machine to enter the state '{}'  ...".format(target_state))
         while True:
-            instance = self._conn.get_device(self.vm_id)
+            instance = self.connect().get_device(self.vm_id)
             self.update_state(instance)
             if instance.state == "provisioning" and hasattr(instance, "provisioning_percentage") and instance.provisioning_percentage:
                 self.log("instance is in {}, {}% done".format(instance.state, int(instance.provisioning_percentage)))
