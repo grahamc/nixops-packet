@@ -122,7 +122,7 @@ python-versions = "*"
 version = "0.7.2"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Invoke py.test as distutils command with dependency resolution"
 name = "pytest-runner"
 optional = false
@@ -194,7 +194,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "3660eb1f5877d8c842f48ed4a10a303e575bed601f3c5daf643611c40a64f104"
+content-hash = "4a8b7493d2f37736587ee908b61522625f8cfbb219aa29a9700fb43e12cfc48b"
 python-versions = "^3.7"
 
 [metadata.files]

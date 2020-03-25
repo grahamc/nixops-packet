@@ -10,11 +10,11 @@ license = "LGPL-3.0-only"
 python = "^3.7"
 packet-python = "^1.42.0"
 nixops = {git = "https://github.com/grahamc/nixops.git", rev = "integration"}
+pytest-runner = "^5.2"
 
 [tool.poetry.dev-dependencies]
 nose = "^1.3.7"
 mypy = "^0.770"
-pytest-runner = "^5.2"
 
 [tool.poetry.plugins."nixops"]
 packet = "nixopspacket.plugin:load"
