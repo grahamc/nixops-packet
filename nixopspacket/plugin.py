@@ -6,7 +6,7 @@ import nixopspacket.parser
 @nixops.plugins.hookimpl
 def nixexprs():
     return [
-        os.path.dirname(__file__) + "/nix"
+        os.path.dirname(os.path.abspath(__file__)) + "/nix"
     ]
 
 @nixops.plugins.hookimpl
