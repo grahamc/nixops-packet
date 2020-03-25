@@ -1,0 +1,23 @@
+
+[tool.poetry]
+name = "nixops-packet"
+version = "1.0"
+description = "NixOps plugin for Packet.com"
+authors = ["Graham Christensen <graham@grahamc.com>"]
+license = "LGPL-3.0-only"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+packet-python = "^1.42.0"
+nixops = {git = "https://github.com/grahamc/nixops.git", rev = "integration"}
+
+[tool.poetry.dev-dependencies]
+nose = "^1.3.7"
+mypy = "^0.770"
+
+[tool.poetry.plugins."nixops"]
+packet = "nixopspacket.plugin:load"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
