@@ -4,8 +4,8 @@
 
 import nixops.util
 import nixops.resources
-import nixopspacket.utils as packet_utils
-import nixopspacket.backends.device
+import nixops_packet.utils as packet_utils
+import nixops_packet.backends.device
 import packet
 
 
@@ -109,7 +109,7 @@ class PacketKeyPairState(nixops.resources.ResourceState):
     def destroy(self, wipe=False):
         def keypair_used():
             for m in self.depl.active_resources.values():
-                if isinstance(m, nixopspacket.backends.device.PacketState) and m.key_pair == self.keypair_name:
+                if isinstance(m, nixops_packet.backends.device.PacketState) and m.key_pair == self.keypair_name:
                     return m
             return None
 
