@@ -28,7 +28,7 @@ class PacketDefinition(MachineDefinition):
 
     def __init__(self, xml, config):
         MachineDefinition.__init__(self, xml, config)
-        self.access_key_id = config["packet"]["accessKeyId"]
+        self.access_key_id = config["packet"].get("accessKeyId", os.environ['PACKET_AUTH_TOKEN'])
         self.key_pair = config["packet"]["keyPair"]
         self.tags = config["packet"]["tags"]
         self.facility = config["packet"]["facility"]
