@@ -130,7 +130,7 @@ class PacketState(MachineState):
     def get_physical_spec_from_plan(self, public_key):
         return {
             'config': { ('users', 'extraUsers', 'root', 'openssh', 'authorizedKeys', 'keys'): [public_key] },
-            'imports': [ nix2py(self.provSystem) if self.provSystem else '{}' ],
+            'imports': [ nix2py(self.provSystem if self.provSystem else '{}') ],
         }
 
     def get_physical_spec(self):
