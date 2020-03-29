@@ -4,11 +4,8 @@
   in pkgs.mkShell {
     buildInputs = [
       (pkgs.poetry2nix.mkPoetryEnv {
-        poetrylock = ./poetry.lock;
-        overrides = [
-          pkgs.poetry2nix.defaultPoetryOverrides
-          overrides
-        ];
+        projectDir = ./.;
+        overrides = pkgs.poetry2nix.overrides.withoutDefaults overrides;
       })
       pkgs.poetry
     ];
