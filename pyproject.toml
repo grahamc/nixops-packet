@@ -1,6 +1,6 @@
 
 [tool.poetry]
-name = "nixops_packet"
+name = "nixops-packet"
 version = "1.0"
 description = "NixOps plugin for Packet.com"
 authors = ["Graham Christensen <graham@grahamc.com>"]
