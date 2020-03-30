@@ -12,8 +12,9 @@ in
   options = {
     deployment.packet = {
       accessKeyId = mkOption {
+        default = "";
         example = "YOURAPIKEY";
-        type = types.nullOr types.str;
+        type = types.str;
         description = ''
           packet.net access key ID
         '';
