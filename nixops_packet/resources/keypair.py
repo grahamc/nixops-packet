@@ -72,7 +72,7 @@ class PacketKeyPairState(nixops.resources.ResourceState):
     def create(self, defn, check, allow_reboot, allow_recreate):
 
         # TODO: Fix Me
-        if defn.access_key_id is None:
+        if defn.access_key_id == "":
             self.access_key_id = os.environ["PACKET_ACCESS_KEY"]
         else:
             self.access_key_id = defn.access_key_id
