@@ -7,6 +7,7 @@ import nixops.resources
 import nixops_packet.utils as packet_utils
 import nixops_packet.backends.device
 import packet
+import os
 
 
 class PacketKeyPairDefinition(nixops.resources.ResourceDefinition):
