@@ -30,7 +30,7 @@ class PacketDefinition(MachineDefinition):
     def __init__(self, xml, config):
         MachineDefinition.__init__(self, xml, config)
         self.access_key_id = config["packet"].get(
-            "accessKeyId", os.environ["PACKET_AUTH_TOKEN"]
+            "accessKeyId", os.environ["PACKET_ACCESS_KEY"]
         )
         self.key_pair = config["packet"]["keyPair"]
         self.tags = config["packet"]["tags"]
