@@ -10,7 +10,7 @@ include = [ "nixops_packet/nix/*.nix" ]
 [tool.poetry.dependencies]
 python = "^3.7"
 packet-python = "^1.42.0"
-nixops = {git = "https://github.com/adisbladis/nixops.git", rev = "poetry2nix-plugins"}
+nixops = {git = "https://github.com/NixOS/nixops.git", rev = "master"}
 pytest-runner = "^5.2"
 
 [tool.poetry.dev-dependencies]
