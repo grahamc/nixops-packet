@@ -8,6 +8,7 @@ import nixops_packet.utils as packet_utils
 import nixops_packet.backends.device
 import packet
 import os
+from typing import cast, Optional
 
 
 class PacketKeyPairOptions(nixops.resources.ResourceOptions):
