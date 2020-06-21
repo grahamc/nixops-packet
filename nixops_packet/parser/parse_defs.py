@@ -3,6 +3,7 @@
 
 import nixops.script_defs
 from nixops_packet.backends.device import PacketState
+from typing import cast
 
 
 def op_sos_console(args):
@@ -14,7 +15,7 @@ def op_sos_console(args):
             raise Exception(
                 "machine is not a Packet device: ‘{0}’".format(args.machine)
             )
-        m.op_sos_console()
+            cast(PacketState, m).op_sos_console()
 
 
 def op_update_provision(args):
@@ -26,7 +27,7 @@ def op_update_provision(args):
             raise Exception(
                 "machine is not a Packet device: ‘{0}’".format(args.machine)
             )
-        m.op_update_provSystem()
+        cast(PacketState, m).op_update_provSystem()
 
 
 def op_reinstall(args):
@@ -38,4 +39,4 @@ def op_reinstall(args):
             raise Exception(
                 "machine is not a Packet device: ‘{0}’".format(args.machine)
             )
-        m.op_reinstall()
+        cast(PacketState, m).op_reinstall()
